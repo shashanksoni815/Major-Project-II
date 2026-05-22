@@ -20,6 +20,14 @@ export const createStaff = async (req, res) => {
   try {
     const body = { ...req.body }
     if (req.file) body.avatar = `/uploads/avatars/${req.file.filename}`
+
+    if (body.labId && !body.labIds) {
+      body.labIds = Array.isArray(body.labId) ? body.labId : [body.labId]
+    }
+    if (body.labIds && !Array.isArray(body.labIds)) {
+      body.labIds = [body.labIds]
+    }
+
     const staff = await Staff.create(body)
     res.status(201).json(staff)
   } catch (err) {
@@ -42,6 +50,14 @@ export const updateStaff = async (req, res) => {
       }
       staff.avatar = `/uploads/avatars/${req.file.filename}`
     }
+
+    if (body.labId && !body.labIds) {
+      body.labIds = Array.isArray(body.labId) ? body.labId : [body.labId]
+    }
+    if (body.labIds && !Array.isArray(body.labIds)) {
+      body.labIds = [body.labIds]
+    }
+
     Object.keys(body).forEach((k) => {
       if (k === 'avatar') return
       staff[k] = body[k]

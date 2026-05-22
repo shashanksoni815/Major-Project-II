@@ -24,7 +24,8 @@ const uploadsPath = path.join(process.cwd(), 'public', 'uploads')
 app.use('/uploads', express.static(uploadsPath))
 
 // Connect DB
-await connectDB(process.env.MONGODB_URI)
+const mongoUri = process.env.MONGODB_URI || process.env.MONGODB_FALLBACK_URI || 'mongodb://127.0.0.1:27017/assets'
+await connectDB(mongoUri)
 
 app.get('/', (req, res) => res.json({ ok: true, message: 'Campus Asset Hub API' }))
 
