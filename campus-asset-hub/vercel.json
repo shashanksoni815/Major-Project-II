@@ -1,4 +1,4 @@
-{
+﻿{
   "version": 2,
   "builds": [
     {
@@ -11,7 +11,11 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "^/(.*\\.(js|css|map|ico|png|jpg|jpeg|svg|woff2?|ttf|json|txt))$",
+      "dest": "/$1"
+    },
+    {
+      "src": "^/(.*)$",
       "dest": "/index.html"
     }
   ]
