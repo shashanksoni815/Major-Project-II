@@ -166,7 +166,7 @@ function Field({ icon, label, children }: { icon: React.ReactNode; label: string
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs font-medium text-muted-foreground">{label}</span>
-      <span className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2.5 transition focus-within:border-gold focus-within:ring-2 focus-within:ring-gold/20">
+      <span className="flex w-full items-center gap-2 rounded-xl border border-border bg-card px-3 py-2.5 transition focus-within:border-gold focus-within:ring-2 focus-within:ring-gold/20">
         <span className="text-muted-foreground">{icon}</span>
         {children}
       </span>
