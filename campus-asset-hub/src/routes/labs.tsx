@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -17,11 +17,7 @@ import { DeviceForm } from "@/components/DeviceForm";
 import { toast } from "sonner";
 import type { Device } from "@/lib/types";
 
-export const Route = createFileRoute("/_app/labs/$labId")({
-  head: ({ params }) => ({ meta: [{ title: `Lab · ${params.labId} · AMS` }] }),
-  component: LabPage,
-  notFoundComponent: () => <NotFound />,
-});
+
 
 function NotFound() {
   return (
@@ -34,8 +30,8 @@ function NotFound() {
   );
 }
 
-function LabPage() {
-  const { labId } = Route.useParams();
+export default function LabPage() {
+  const { labId } = useParams();
   const labs = useAMS((s) => s.labs);
   const devices = useAMS((s) => s.devices);
   const staff = useAMS((s) => s.staff);
@@ -46,7 +42,16 @@ function LabPage() {
 
   const lab = labs.find((l) => l.id === labId);
   const labDevices = useMemo(() => devices.filter((d) => d.labId === labId), [devices, labId]);
-  const incharge = staff.find((s) => s.id === lab?.inchargeId);
+  const assignedStaff = useMemo(
+    () => staff.filter((s) => {
+      const ids = s.labIds ?? (s.labId ? [s.labId] : []);
+      return labId ? ids.includes(labId) : false;
+    }),
+    [staff, labId]
+  );
+  const incharge = staff.find((s) => s.id === lab?.inchargeId) ?? assignedStaff[0];
+  const inchargeLabel = lab?.inchargeId ? 'Lab Incharge' : assignedStaff.length ? 'Assigned Staff' : 'Lab Incharge';
+  const inchargeSuffix = !lab?.inchargeId && assignedStaff.length > 1 ? ` +${assignedStaff.length - 1} more` : '';
 
   const [editOpen, setEditOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -92,8 +97,8 @@ function LabPage() {
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold"><UserIcon className="h-5 w-5" /></div>
             <div>
-              <p className="text-xs text-muted-foreground">Lab Incharge</p>
-              <p className="font-medium">{incharge?.name ?? "Unassigned"}</p>
+              <p className="text-xs text-muted-foreground">{inchargeLabel}</p>
+              <p className="font-medium">{incharge?.name ?? "Unassigned"}{inchargeSuffix}</p>
             </div>
           </div>
           <div className="h-10 w-px bg-border hidden sm:block" />
@@ -206,7 +211,7 @@ function LabPage() {
       <ConfirmDialog
         open={confirmDelete}
         onClose={() => setConfirmDelete(false)}
-        onConfirm={() => { deleteLab(lab.id); toast.success("Lab deleted"); navigate({ to: "/dashboard" }); }}
+        onConfirm={() => { deleteLab(lab.id); toast.success("Lab deleted"); navigate("/dashboard"); }}
         title={`Delete “${lab.name}”?`}
         description="This will also remove all devices assigned to this lab. This action cannot be undone."
         destructive

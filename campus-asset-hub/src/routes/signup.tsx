@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, User, Phone, ArrowRight, Loader2 } from "lucide-react";
@@ -7,17 +7,7 @@ import { useTheme, useApplyTheme } from "@/lib/theme";
 import { toast } from "sonner";
 import Logo from "@/assets/logo.jpg";
 
-export const Route = createFileRoute("/signup")({
-  head: () => ({
-    meta: [
-      { title: "Sign up · AMS · CDGI ECE" },
-      { name: "description", content: "Register a new account for the Asset Management System." },
-    ],
-  }),
-  component: SignupPage,
-});
-
-function SignupPage() {
+export default function SignupPage() {
   useApplyTheme();
   const { theme, toggle } = useTheme();
   const signup = useAuth((s) => s.signup);
@@ -45,7 +35,7 @@ function SignupPage() {
     try {
       await signup(name, email, password, phone);
       toast.success("Account created successfully.");
-      navigate({ to: "/" });
+      navigate("/");
     } catch (error) {
       toast.error((error as Error).message || "Could not create account");
     } finally {

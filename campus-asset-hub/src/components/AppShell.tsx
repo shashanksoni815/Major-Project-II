@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Outlet, useLocation } from "@tanstack/react-router";
+import { Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";

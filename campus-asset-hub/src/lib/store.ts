@@ -50,10 +50,15 @@ function normalizeRecord<T extends { id?: string; _id?: string; labId?: string; 
     normalized.id = normalized._id
     delete normalized._id
   }
+  
+  // if labIds is missing but labId exists, populate labIds (mainly for staff compatibility)
   if (normalized.labIds == null && normalized.labId != null) {
     normalized.labIds = Array.isArray(normalized.labId) ? normalized.labId : [normalized.labId]
-    delete normalized.labId
   }
+  
+  // If it's a device or other entity that uses labId, we shouldn't delete labId.
+  // We'll leave labId intact.
+  
   return normalized
 }
 

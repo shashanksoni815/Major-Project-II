@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard, FlaskConical, Plus, HardDrive, Users, ArrowLeftRight,
@@ -91,8 +91,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             return (
               <li key={lab.id}>
                 <Link
-                  to="/labs/$labId"
-                  params={{ labId: lab.id }}
+                  to={`/labs/${lab.id}`}
                   onClick={onNavigate}
                   className={cn(
                     "group relative flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition shrink-0",
@@ -130,7 +129,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             <p className="truncate text-[11px] text-sidebar-foreground/60">{user?.email}</p>
           </div>
           <button
-            onClick={() => { logout(); navigate({ to: "/login" }); }}
+            onClick={() => { logout(); navigate("/login"); }}
             className="rounded-md p-1.5 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-destructive"
             aria-label="Sign out"
           >

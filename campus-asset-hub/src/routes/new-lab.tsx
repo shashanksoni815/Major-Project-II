@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Save, ArrowLeft } from "lucide-react";
@@ -6,12 +6,7 @@ import { useAMS } from "@/lib/store";
 import { PageHeader } from "@/components/PageHeader";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_app/labs/new")({
-  head: () => ({ meta: [{ title: "Add Lab · AMS" }] }),
-  component: AddLab,
-});
-
-function AddLab() {
+export default function AddLab() {
   const addLab = useAMS((s) => s.addLab);
   const staff = useAMS((s) => s.staff);
   const navigate = useNavigate();
@@ -26,7 +21,7 @@ function AddLab() {
     if (!name.trim() || !subject.trim()) { toast.error("Name and subject are required"); return; }
     const lab = await addLab({ name: name.trim(), semester, subject: subject.trim(), inchargeId: inchargeId || undefined, description: description.trim() });
     toast.success("Lab created");
-    navigate({ to: "/labs/$labId", params: { labId: lab.id } });
+    navigate("/labs/" + lab.id);
   }
 
   return (
@@ -73,7 +68,7 @@ function AddLab() {
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-gold focus:ring-2 focus:ring-gold/20" />
         </Field>
         <div className="md:col-span-2 flex justify-end gap-2 pt-2">
-          <button type="button" onClick={() => navigate({ to: "/dashboard" })} className="rounded-lg border border-border bg-card px-4 py-2 text-sm hover:border-gold">Cancel</button>
+          <button type="button" onClick={() => navigate("/dashboard")} className="rounded-lg border border-border bg-card px-4 py-2 text-sm hover:border-gold">Cancel</button>
           <button type="submit" className="inline-flex items-center gap-2 rounded-lg gold-gradient px-4 py-2 text-sm font-semibold text-charcoal shadow shadow-gold/30 hover:shadow-gold/50">
             <Save className="h-4 w-4" /> Create Lab
           </button>

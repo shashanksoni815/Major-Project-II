@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useMemo, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Plus, Search, Mail, Phone, Edit2, Trash2, UserPlus, Save } from "lucide-react";
@@ -11,14 +11,8 @@ import { StatusPill } from "@/components/StatusPill";
 import { toast } from "sonner";
 import type { Staff, StaffRole } from "@/lib/types";
 
-export const Route = createFileRoute("/_app/staff")({
-  head: () => ({ meta: [{ title: "Staff · AMS · CDGI ECE" }] }),
-  component: StaffPage,
-});
-
-const roles: StaffRole[] = ["Faculty", "Lab Assistant", "HOD", "Technician"];
-
-function StaffPage() {
+export default function StaffPage() {
+  const roles: StaffRole[] = ["Faculty", "Lab Assistant", "HOD", "Technician"];
   const staff = useAMS((s) => s.staff);
   const labs = useAMS((s) => s.labs);
   const deleteStaff = useAMS((s) => s.deleteStaff);
@@ -114,6 +108,7 @@ function StaffPage() {
 }
 
 function StaffForm({ staff, onClose }: { staff?: Staff; onClose: () => void }) {
+  const roles: StaffRole[] = ["Faculty", "Lab Assistant", "HOD", "Technician"];
   const addStaff = useAMS((s) => s.addStaff);
   const updateStaff = useAMS((s) => s.updateStaff);
   const labs = useAMS((s) => s.labs);

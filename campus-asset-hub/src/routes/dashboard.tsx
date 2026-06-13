@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import {
@@ -15,12 +15,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { StatusPill } from "@/components/StatusPill";
 import { formatDistanceToNow } from "date-fns";
 
-export const Route = createFileRoute("/_app/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard · AMS · CDGI ECE" }] }),
-  component: Dashboard,
-});
-
-function Dashboard() {
+export default function Dashboard() {
   const labs = useAMS((s) => s.labs);
   const devices = useAMS((s) => s.devices);
   const staff = useAMS((s) => s.staff);

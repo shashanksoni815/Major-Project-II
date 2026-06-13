@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,12 +12,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
 
-export const Route = createFileRoute("/_app/transfers")({
-  head: () => ({ meta: [{ title: "Transfers · AMS" }] }),
-  component: TransfersPage,
-});
-
-function TransfersPage() {
+export default function TransfersPage() {
   const labs = useAMS((s) => s.labs);
   const devices = useAMS((s) => s.devices);
   const transfers = useAMS((s) => s.transfers);

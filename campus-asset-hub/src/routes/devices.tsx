@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -15,12 +15,7 @@ import { EmptyState } from "@/components/EmptyState";
 import { toast } from "sonner";
 import type { Device } from "@/lib/types";
 
-export const Route = createFileRoute("/_app/devices")({
-  head: () => ({ meta: [{ title: "Devices · AMS · CDGI ECE" }] }),
-  component: DevicesPage,
-});
-
-function DevicesPage() {
+export default function DevicesPage() {
   const devices = useAMS((s) => s.devices);
   const labs = useAMS((s) => s.labs);
   const deleteDevice = useAMS((s) => s.deleteDevice);

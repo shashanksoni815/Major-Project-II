@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Search, X, ArrowRight } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router-dom";
 import { useAMS } from "@/lib/store";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -99,7 +99,7 @@ export function SearchBar() {
   }, [query, labs, devices, staff]);
 
   const handleSelect = (path: string) => {
-    navigate({ to: path });
+    navigate(path);
     setOpen(false);
     setQuery("");
   };

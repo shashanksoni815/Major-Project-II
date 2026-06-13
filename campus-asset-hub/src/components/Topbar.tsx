@@ -1,7 +1,7 @@
 import { Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "@/lib/theme";
 import { motion } from "framer-motion";
-import { useLocation } from "@tanstack/react-router";
+import { useLocation } from "react-router-dom";
 import { useAMS } from "@/lib/store";
 import { SearchBar } from "./SearchBar";
 import { NotificationPanel } from "./NotificationPanel";

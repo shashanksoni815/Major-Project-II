@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { motion } from "framer-motion";
 import { FileText, FileSpreadsheet, BarChart3 } from "lucide-react";
 import { useAMS } from "@/lib/store";
@@ -9,12 +9,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 
-export const Route = createFileRoute("/_app/reports")({
-  head: () => ({ meta: [{ title: "Reports · AMS" }] }),
-  component: ReportsPage,
-});
-
-function ReportsPage() {
+export default function ReportsPage() {
   const labs = useAMS((s) => s.labs);
   const devices = useAMS((s) => s.devices);
 

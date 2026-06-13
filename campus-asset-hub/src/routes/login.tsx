@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
@@ -8,17 +8,7 @@ import { toast } from "sonner";
 // import Logo from "./logo.jpg";
 import Logo from "@/assets/logo.jpg";
 
-export const Route = createFileRoute("/login")({
-  head: () => ({
-    meta: [
-      { title: "Sign in · AMS · CDGI ECE" },
-      { name: "description", content: "Sign in to the Asset Management System for CDGI ECE Department." },
-    ],
-  }),
-  component: LoginPage,
-});
-
-function LoginPage() {
+export default function LoginPage() {
   useApplyTheme();
   const { theme, toggle } = useTheme();
   const login = useAuth((s) => s.login);
@@ -34,7 +24,7 @@ function LoginPage() {
     try {
       await login(email, password);
       toast.success("Welcome back");
-      navigate({ to: "/" });
+      navigate("/");
     } catch {
       toast.error("Could not sign in");
     } finally {

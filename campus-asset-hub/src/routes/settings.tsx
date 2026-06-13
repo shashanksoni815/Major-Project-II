@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { motion } from "framer-motion";
 import { Moon, Sun, RotateCcw, Database, Palette } from "lucide-react";
 import { useAMS } from "@/lib/store";
@@ -9,12 +9,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_app/settings")({
-  head: () => ({ meta: [{ title: "Settings · AMS" }] }),
-  component: SettingsPage,
-});
-
-function SettingsPage() {
+export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
   const resetData = useAMS((s) => s.resetData);
   const labs = useAMS((s) => s.labs);

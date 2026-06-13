@@ -1,13 +1,13 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const Route = createFileRoute("/")({
-  beforeLoad: () => {
-    if (typeof window === "undefined") {
-      throw redirect({ to: "/login" });
-    }
+export default function Landing() {
+  const navigate = useNavigate();
+  useEffect(() => {
     const raw = localStorage.getItem("ams-auth-v1");
     let authed = false;
     try { authed = !!JSON.parse(raw ?? "{}")?.state?.user; } catch { /* noop */ }
-    throw redirect({ to: authed ? "/dashboard" : "/login" });
-  },
-});
+    navigate(authed ? "/dashboard" : "/login", { replace: true });
+  }, [navigate]);
+  return null;
+}
